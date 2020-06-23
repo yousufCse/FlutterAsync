@@ -7,12 +7,10 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Startup Name Generator"),
-        ),
-        body: RandomWords(),
+      theme: ThemeData(
+        primaryColor: Colors.red
       ),
+      home: RandomWords(),
     );
   }
 }

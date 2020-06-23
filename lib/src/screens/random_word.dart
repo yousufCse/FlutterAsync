@@ -11,17 +11,54 @@ class _RandomWordsState extends State<RandomWords> {
   final _suggestions = <WordPair>[];
   final _biggerFont = TextStyle(fontSize: 18.0);
 
+  void _pushedSaved() {
+    Navigator.of(context)
+        .push(MaterialPageRoute<void>(builder: (BuildContext context) {
+      final tiles = _saved.map((WordPair pair) {
+        return ListTile(
+          title: Text(
+            pair.asPascalCase,
+            style: _biggerFont,
+          ),
+        );
+      });
+
+      final divider =
+          ListTile.divideTiles(context: context, tiles: tiles).toList();
+
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Saved Suggestions"),
+        ),
+        body: ListView(
+          children: divider,
+        ),
+      );
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return _buildSuggestions();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Startup Name Generator"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.list),
+            onPressed: _pushedSaved,
+          )
+        ],
+      ),
+      body: _buildSuggestions(),
+    );
   }
 
   Widget _buildSuggestions() {
-    return ListView.builder(itemBuilder: (context ,i) {
-      if(i.isOdd) return Divider();
+    return ListView.builder(itemBuilder: (context, i) {
+      if (i.isOdd) return Divider();
 
       final index = i ~/ 2;
-      if(index >= _suggestions.length) {
+      if (index >= _suggestions.length) {
         _suggestions.addAll(generateWordPairs().take(10));
       }
       return _buildRow(_suggestions[index]);
@@ -39,10 +76,9 @@ class _RandomWordsState extends State<RandomWords> {
         alreadySaved ? Icons.favorite : Icons.favorite_border,
         color: alreadySaved ? Colors.red : null,
       ),
-
       onTap: () {
         setState(() {
-          if(alreadySaved) {
+          if (alreadySaved) {
             _saved.remove(pair);
           } else {
             _saved.add(pair);
