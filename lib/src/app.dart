@@ -9,7 +9,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Random Words"),
+          title: Text("Startup Name Generator"),
         ),
         body: RandomWords(),
       ),
